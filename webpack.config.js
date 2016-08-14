@@ -33,6 +33,21 @@ module.exports = {
     })
   ],
 
+  // The less you you put into the resolve section, the faster weback will
+  // perform builds
+  resolve: {
+    modulesDirectories: ['node_modules'], // Look in those directories if module path is not provider
+    extensions: ['', 'js'] // Resolve to the above modulesDirectories for empty or .js extensions
+  },
+
+  resolveLoader: {
+    // Similar as above but only for loaders. This will allow use babel, instead
+    // of babel-loader.js
+    modulesDirectories: [node_modules],
+    moduleTemplates: ['*-loader'],
+    extensions: ['', '.js']
+  },
+
   // https://webpack.github.io/docs/loaders.html
   // Loader is a transformer that gets a javascript and sourcemap and returns
   // ES5 javascript and sourcemap
