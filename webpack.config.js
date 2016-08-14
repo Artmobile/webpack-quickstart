@@ -12,5 +12,7 @@ module.exports = {
 
   watchOptions: {
     aggregateTimeout: 100 // Default value is 300
-  }
+  },
+
+  devtool: "source-map"
 };
