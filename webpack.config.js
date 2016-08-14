@@ -54,9 +54,11 @@ module.exports = {
       exclude: ['node_modules']
     }),
 
-    new CopyWebpackPlugin([{
-        from: '../public/home.html', // THe current context is set to 'frontend' folder
-    }]),
+    new CopyWebpackPlugin([
+      { from: '../public/home.html'}, // THe current context is set to 'frontend' folder
+      { context: '../server', from: '**/*.js', to: './server'},
+      { context: '../server', from: '*.ts', to: './server'}
+    ]),
 
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
