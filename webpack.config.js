@@ -27,6 +27,7 @@ module.exports = {
   },
   output: {
     path: '.dist',
+    publicPath: '/',
     filename: "[name].js",
     library: "[name]"
   },
@@ -47,17 +48,17 @@ module.exports = {
   // https://webpack.github.io/docs/list-of-plugins.html
   plugins:[
     new webpack.NoErrorsPlugin(),
-    new CleanWebpackPlugin(['.dist'], {
-      root: __dirname,
-      verbose: true,
-      dry: false,
-      exclude: ['node_modules']
-    }),
+    // new CleanWebpackPlugin(['.dist'], {
+    //   root: __dirname,
+    //   verbose: true,
+    //   dry: false,
+    //   exclude: ['node_modules']
+    // }),
 
     new CopyWebpackPlugin([
       { from: '../public/home.html'}, // THe current context is set to 'frontend' folder
-      { context: '../server', from: '**/*.js', to: './server'},
-      { context: '../server', from: '*.ts', to: './server'}
+      { context: '../server', from: '**/*.js', to: './server'}, // Glob is supported
+      { context: '../server', from: '*.ts', to: './server'} // This will copy only the top level files
     ]),
 
     new webpack.DefinePlugin({
@@ -115,7 +116,6 @@ module.exports = {
     }]
   }
 };
-
 
 // Add minification plugin
 if(NODE_ENV == 'production'){
