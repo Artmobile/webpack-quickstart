@@ -4,6 +4,7 @@ module.exports = {
   entry: './home',
   output: {
     // path: __dirname + "/dist",
-    filename: "build.js"
+    filename: "build.js",
+    library: "home"
   }
 };
