@@ -8,3 +8,11 @@ https://www.youtube.com/watch?v=kLMjOd-x0aQ&list=PLDyvV36pndZHfBThhg4Z0822EEG9VG
 ```
  webpack --display-modules -v
 ```
+
+# Show build stats
+Save the status into stats.json file (name of the file can be anything)
+```
+webpack --json --profile > stats.json   
+```
+
+Then upload it in the following link: http://webpack.github.io/analyse/
