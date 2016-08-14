@@ -9,7 +9,7 @@ module.exports = {
   context: __dirname + '/frontend',
   entry: {
     home: './home',
-    about: './about'
+    about: './about',
   },
   output: {
     path: 'public',
@@ -32,6 +32,7 @@ module.exports = {
   // List of plugins can be found here:
   // https://webpack.github.io/docs/list-of-plugins.html
   plugins:[
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
     })
