@@ -11,7 +11,14 @@ module.exports = {
     home: './home',
     about: './about',
     shop: './shoppingcart/shop',
-    order: './shoppingcart/order'
+    order: './shoppingcart/order',
+
+    // This file will be used by the common.js created by the CommonsChunkPlugin
+    // Also we decided to pack common and welcome as a single package
+    // Important: Library common will get a default export of a last module
+    // This way we cann connect libraries that must be contained in a common module
+    // For example this may be header and footer modules
+    common: ['./welcome', './common']
   },
   output: {
     path: 'public',
@@ -38,6 +45,8 @@ module.exports = {
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
     }),
+    // CommonsChunkPlugin will extract common information for
+    //
     // https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
     new webpack.optimize.CommonsChunkPlugin({
         name: 'common',
