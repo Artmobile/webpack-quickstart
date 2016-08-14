@@ -1,10 +1,15 @@
 'use strict;'
 
-var path = require('path')
+const path                = require('path')
+const CopyWebpackPlugin   = require('copy-webpack-plugin');
+const CleanWebpackPlugin  = require('clean-webpack-plugin');
+const webpack             = require('webpack')
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
-const webpack = require('webpack')
 
+
+// Multi compilation is also supported like so:
+// module.exports = [{},{},{}]
 module.exports = {
   context: __dirname + '/frontend',
   entry: {
@@ -21,7 +26,7 @@ module.exports = {
     common: ['./welcome', './common']
   },
   output: {
-    path: 'public',
+    path: '.dist',
     filename: "[name].js",
     library: "[name]"
   },
@@ -42,6 +47,17 @@ module.exports = {
   // https://webpack.github.io/docs/list-of-plugins.html
   plugins:[
     new webpack.NoErrorsPlugin(),
+    new CleanWebpackPlugin(['.dist'], {
+      root: __dirname,
+      verbose: true,
+      dry: false,
+      exclude: ['node_modules']
+    }),
+
+    new CopyWebpackPlugin([{
+        from: '../public/home.html', // THe current context is set to 'frontend' folder
+    }]),
+
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
     }),

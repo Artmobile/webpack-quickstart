@@ -41,6 +41,7 @@ build.js
 *.js.map
 
 .cache
+.dist
 
 
 stats.json
