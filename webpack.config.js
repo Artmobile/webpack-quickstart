@@ -10,6 +10,8 @@ module.exports = {
   entry: {
     home: './home',
     about: './about',
+    shop: './shoppingcart/shop',
+    order: './shoppingcart/order'
   },
   output: {
     path: 'public',
@@ -36,9 +38,22 @@ module.exports = {
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
     }),
+    // https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin
     new webpack.optimize.CommonsChunkPlugin({
-        name: 'common'
+        name: 'common',
+        minChunks: 2, // Modules reused in at least in 2 places will be placed inside common.js
+        chunks: ['about', 'home']
+    }),
+
+    // CommoChunkPlugin can be called second time with other modules
+    // Given a different name, the new file will have a common extract
+    // for different module
+    new webpack.optimize.CommonsChunkPlugin({
+        name: 'common-cart',
+        minChunks: 2, // Modules reused in at least in 2 places will be placed inside common.js
+        chunks: ['shop', 'order']
     })
+
   ],
 
   // The less you you put into the resolve section, the faster weback will
@@ -76,17 +91,17 @@ module.exports = {
 
 
 // Add minification plugin
-// if(NODE_ENV == 'production'){
-//
-//   module.exports.plugins.push(
-//     new webpack.optimize.UglifyJsPlugin({
-//       compress:{
-//         // don't show unreachable variable, etc
-//         warnings: false,
-//         drop_console: true,
-//         unsafe: true
-//       }
-//     })
-//   );
-//
-// }
+if(NODE_ENV == 'production'){
+
+  module.exports.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        // don't show unreachable variable, etc
+        warnings: false,
+        drop_console: true,
+        unsafe: true
+      }
+    })
+  );
+
+}
