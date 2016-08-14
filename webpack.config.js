@@ -1,5 +1,7 @@
 'use strict;'
 
+var path = require('path')
+
 const NODE_ENV = process.env.NOD_ENV || 'development'
 const webpack = require('webpack')
 
@@ -17,6 +19,10 @@ module.exports = {
     aggregateTimeout: 100 // Default value is 300
   },
 
+  // Avilable source map opitons:
+  // * eval: fastest
+  // * source-map: regular, will be visible in  production
+  // * cheap-inline-module-source-map: faster than source-map
   devtool: NODE_ENV == 'development' ? 'cheap-inline-module-source-map' : null,
 
   // List of plugins can be found here:
@@ -25,5 +31,22 @@ module.exports = {
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify(NODE_ENV)
     })
-  ]
+  ],
+
+  // https://webpack.github.io/docs/loaders.html
+  // Loader is a transformer that gets a javascript and sourcemap and returns
+  // ES5 javascript and sourcemap
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      exclude: /(node_modules|bower_components)/,
+      // include:[
+      //   path.resolve(__dirname)
+      // ],
+      loader: 'babel',
+      query: {
+        presets: ['es2015']
+      }
+    }]
+  }
 };
