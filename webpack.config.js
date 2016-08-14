@@ -6,11 +6,15 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './home',
+  context: __dirname + '/frontend',
+  entry: {
+    home: './home',
+    about: './about'
+  },
   output: {
-    // path: __dirname + "/dist",
-    filename: "build.js",
-    library: "home"
+    path: 'public',
+    filename: "[name].js",
+    library: "[name]"
   },
 
   watch: NODE_ENV === 'development',
@@ -68,17 +72,17 @@ module.exports = {
 
 
 // Add minification plugin
-if(NODE_ENV == 'production'){
-
-  module.exports.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress:{
-        // don't show unreachable variable, etc
-        warnings: false,
-        drop_console: true,
-        unsafe: true
-      }
-    })
-  );
-
-}
+// if(NODE_ENV == 'production'){
+//
+//   module.exports.plugins.push(
+//     new webpack.optimize.UglifyJsPlugin({
+//       compress:{
+//         // don't show unreachable variable, etc
+//         warnings: false,
+//         drop_console: true,
+//         unsafe: true
+//       }
+//     })
+//   );
+//
+// }
