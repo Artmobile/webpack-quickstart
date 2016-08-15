@@ -42,6 +42,6 @@ build.js
 
 .cache
 .dist
-
+.idea
 
 stats.json

@@ -2,11 +2,26 @@
 
 const path                = require('path')
 const CopyWebpackPlugin   = require('copy-webpack-plugin');
-const CleanWebpackPlugin  = require('clean-webpack-plugin');
 const webpack             = require('webpack')
+const _                   = require('lodash')
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
+
+// A collection of legacy non-commonjs files that must be handled with imports/export-loader
+const legacy              = require('./build/legacy')
+
+//region Attach cleaner plugin
+// For development, we do not want do delete anything, define a dummy clean plugin
+function CleanWebpackPlugin(){}
+CleanWebpackPlugin.prototype.apply = function(compiler){
+  console.log('Non production environment detected - will not clean dist env folder')
+}
+
+// For production attach to a real cleaner plugin
+if(NODE_ENV==='production')
+  CleanWebpackPlugin  = require('clean-webpack-plugin'); // should be used only for production output
+//endregion Attach cleaner plugin
 
 // Multi compilation is also supported like so:
 // module.exports = [{},{},{}]
@@ -26,7 +41,7 @@ module.exports = {
     common: ['./welcome', './common']
   },
   output: {
-    path: '.dist',
+    path: '.dist/' + NODE_ENV,
     publicPath: '/',
     filename: "[name].js",
     library: "[name]"
@@ -48,12 +63,13 @@ module.exports = {
   // https://webpack.github.io/docs/list-of-plugins.html
   plugins:[
     new webpack.NoErrorsPlugin(),
-    // new CleanWebpackPlugin(['.dist'], {
-    //   root: __dirname,
-    //   verbose: true,
-    //   dry: false,
-    //   exclude: ['node_modules']
-    // }),
+
+    new CleanWebpackPlugin([path.join('.dist', NODE_ENV)], {
+      root: __dirname,
+      verbose: true,
+      dry: false,
+      exclude: ['node_modules']
+    }),
 
     new CopyWebpackPlugin([
       { from: '../public/home.html'}, // THe current context is set to 'frontend' folder
@@ -87,7 +103,11 @@ module.exports = {
   // The less you you put into the resolve section, the faster weback will
   // perform builds
   resolve: {
-    modulesDirectories: ['node_modules'], // Look in those directories if module path is not provider
+    root: path.join(__dirname, 'vendor'), // this way we do not have to add vendor when requireing 3rd party components (which are not commonjs)
+    alias: {
+      thirdparty: 'thirdparty/dist/component',
+    },
+    modulesDirectories: ['node_modules'], // Look in those directories if module path is not provided
     extensions: ['', '.js'] // Resolve to the above modulesDirectories for empty or .js extensions
   },
 
@@ -103,7 +123,7 @@ module.exports = {
   // Loader is a transformer that gets a javascript and sourcemap and returns
   // ES5 javascript and sourcemap
   module: {
-    loaders: [{
+    loaders: _.union(legacy,[{
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       include:[
@@ -113,7 +133,7 @@ module.exports = {
       query: {
         presets: ['es2015']
       }
-    }]
+    }])
   }
 };
 
