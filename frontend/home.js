@@ -30,7 +30,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       login();
 
-    })
+    }, 'auth')
+
+  }
+
+  document.getElementById('logoutButton').onclick = function(){
+
+
+    require.ensure([], function(require){
+
+      let logout = require('./logout');
+
+      logout();
+
+    }, 'auth')
 
   }
 });
