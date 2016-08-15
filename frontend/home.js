@@ -7,7 +7,12 @@ import angular from 'angular';
 // For more details:
 //    http://webpack.github.io/docs/shimming-modules.html
 let vendor = require('vendor');
-vendor(); // Note that Work function became default export, so just call vandor(), not vendor.Work()
+vendor("local"); // Note that Work function became default export, so just call vendor(), not vendor.Work()
+
+// Work is exposed via expose-loader plugin (see legacy.js). It sis similar to ProvidePlugin but here we can declare
+//  what to expose while exporting
+Work("global");
+
 //endregion
 
 //region Attempt aliased dependency invocation. This one has a proper export
