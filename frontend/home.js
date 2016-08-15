@@ -17,8 +17,8 @@ thirdparty();
 //region Attempt 3rd party component locatecin node_modules
 // Moment is to big for the excersise. Uncomment it to see that
 // module moment can be downloaded from node_modules directory
-// let moment = require('moment')
-// console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
+let moment = require('moment')
+console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
 //endregion
 
 //region Load with context

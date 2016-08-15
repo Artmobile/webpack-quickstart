@@ -64,6 +64,11 @@ module.exports = {
   plugins:[
     new webpack.NoErrorsPlugin(),
 
+    // Use ContextReplacementPlugin to remove moment.js unneded locales. Here we specify
+    // that we only want en-us.js from node_modules/moment/locale
+    // ContextReplacementPlugin plugin uses same concept as require.context
+    new webpack.ContextReplacementPlugin(/node_modules\/moment\/locale/, 'en-us'),
+
     new CleanWebpackPlugin([path.join('.dist', NODE_ENV)], {
       root: __dirname,
       verbose: true,
