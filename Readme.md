@@ -16,3 +16,8 @@ webpack --json --profile > stats.json
 ```
 
 Then upload it in the following link: http://webpack.github.io/analyse/
+
+# Profile webpack
+```
+webpack --profile --display-modules --display-reasons
+```

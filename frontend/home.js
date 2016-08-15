@@ -1,4 +1,5 @@
-import welcome from'./welcome';
+import welcome from './welcome';
+import angular from 'angular';
 
 //region  Attempt to invoke a non-commonjs third party component
 // Using imports-loader webpack plugin to pass workSettings.delay parameter

@@ -143,13 +143,15 @@ module.exports = {
       test: /\.js$/,
       exclude: /(node_modules|bower_components)/,
       include:[
-        path.resolve(__dirname)
+        path.join(__dirname,'frontend')
       ],
       loader: 'babel',
       query: {
         presets: ['es2015']
       }
-    }])
+    }]),
+
+    noParse: /angular\/angular.js/
   }
 };
 
