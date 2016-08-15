@@ -92,8 +92,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   }
 });
 
-// Now we login
-
 
 welcome('home')
 
