@@ -19,6 +19,25 @@ let moment = require('moment')
 console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
 //endregion
 
+//region Load with context
+
+// require.context can be used to load an entire folder and its subfolders,
+// Note that the second parameter indicates whether or not we want to scan the subfolders of a given path
+// Also note, that if we provide in the file mask regex too generic match expression, the files will be loaded twice.
+// For example, if you use /.*/ instead of /.js/, <file>.js will be loaded twice (as observed). Apparently this is
+// because of how webpack breaks the require() content. It looks at folder/ name adn extensions separately and perform
+// several passes while scanning. So file <file>.js will be found first because it matches *  and then because
+// it matches .js
+let context = require.context('./app-context/', true, /.js$/);
+
+context.keys().forEach(function(path){
+
+  let module = context(path);
+  module();
+});
+
+//endregion Load with context
+
 document.addEventListener("DOMContentLoaded", function(event) {
   //do work
   document.getElementById('loginButton').onclick = function(){

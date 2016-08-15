@@ -41,7 +41,7 @@ build.js
 *.js.map
 
 .cache
-.dist
+.dist/**
 .idea
 
 stats.json
