@@ -15,8 +15,10 @@ thirdparty();
 //endregion
 
 //region Attempt 3rd party component locatecin node_modules
-let moment = require('moment')
-console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
+// Moment is to big for the excersise. Uncomment it to see that
+// module moment can be downloaded from node_modules directory
+// let moment = require('moment')
+// console.log(moment().format('MMMM Do YYYY, h:mm:ss a'))
 //endregion
 
 //region Load with context
@@ -37,6 +39,29 @@ context.keys().forEach(function(path){
 });
 
 //endregion Load with context
+
+//region Load as bundle
+// If we want webpack not to include the file into the entry point, we can use bundle-loader
+// bundle-loader will wrap the javascript file into require.ensure and leave the original
+// javascript file external to the entry point.
+
+let handler;
+
+try{
+  // Even though the function
+  handler = require('bundle!./bundles/somebundle');
+}
+catch(e){
+  alert("No such path");
+}
+
+if(handler) {
+  handler(function(bundle){
+    // Invoke whatever the bundle exported
+    bundle();
+  })
+}
+//endregion
 
 document.addEventListener("DOMContentLoaded", function(event) {
   //do work
