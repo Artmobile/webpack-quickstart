@@ -74,7 +74,24 @@ $(function(){
     {id:"xdfr", name: "Arthur"}
   ]
 
-  console.log(_.union(users, [{id:'bbbb', name:'Alice'}]));
+
+  // Using lodash from CDN and from node_modules at the same time
+
+  // Map is defined in ProviderPlugin section in webpack.config.js
+  let agents = map(users, function(user){
+    return {
+      id: user.id,
+      name: user.name,
+      timestamp: moment().format('MMMM Do YYYY, h:mm:ss a')
+    };
+  })
+
+  // This one is explicitly required
+  let union = require('lodash/union')
+
+  // This comes from the externals section inside webpack.config.js
+  if(!_.isEmpty(agents))
+    console.log(union(agents, [{id:'bbbb', name:'Alice'}]));
 
 })
 

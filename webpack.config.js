@@ -102,6 +102,10 @@ module.exports = {
         name: 'common-cart',
         minChunks: 2, // Modules reused in at least in 2 places will be placed inside common.js
         chunks: ['shop', 'order']
+    }),
+
+    new webpack.ProvidePlugin({
+      map: 'lodash/map'
     })
 
   ],
