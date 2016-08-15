@@ -27,6 +27,7 @@ if(NODE_ENV==='production')
 // module.exports = [{},{},{}]
 module.exports = {
   context: __dirname + '/frontend',
+
   entry: {
     home: './home',
     about: './about',
@@ -104,6 +105,12 @@ module.exports = {
     })
 
   ],
+
+  // Use externals when you want global references to things like lodash, underscore, jquery, etc
+  externals: {
+    lodash: '_',  // lodash external
+    jquery: '$'   //  jquery external
+  },
 
   // The less you you put into the resolve section, the faster weback will
   // perform builds

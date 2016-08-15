@@ -63,6 +63,23 @@ if(handler) {
 }
 //endregion
 
+//
+// region Externals usage example
+
+$(function(){
+
+  let users = [
+    {id:"abcd", name: "John"},
+    {id:"dbfe", name: "Jane"},
+    {id:"xdfr", name: "Arthur"}
+  ]
+
+  console.log(_.union(users, [{id:'bbbb', name:'Alice'}]));
+
+})
+
+//endregion
+
 document.addEventListener("DOMContentLoaded", function(event) {
   //do work
   document.getElementById('loginButton').onclick = function(){
